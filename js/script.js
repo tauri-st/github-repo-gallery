@@ -1,10 +1,11 @@
 //Div where profile information appears
 const profileDiv = document.querySelector(".overview");
-
 const username = "tauri-st";
+//Unordered list where repos appear
+const repoList = document.querySelector(".repo-list");
 
 const getProfile = async function () {
-    const profile = await fetch (
+    const profile = await fetch(
         `https://api.github.com/users/${username}`
     );
     const data = await profile.json();
@@ -30,3 +31,13 @@ const showProfile = function (data) {
     `;
     profileDiv.append(div);
 };
+
+const getRepos = async function () {
+    const fetchRepos = await fetch(
+        `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`
+        );
+    const repoData = await fetchRepos.json();
+    console.log(repoData);
+};
+
+getRepos();
