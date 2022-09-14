@@ -30,6 +30,7 @@ const showProfile = function (data) {
     </div> 
     `;
     profileDiv.append(div);
+    getRepos();
 };
 
 const getRepos = async function () {
@@ -38,6 +39,14 @@ const getRepos = async function () {
         );
     const repoData = await fetchRepos.json();
     console.log(repoData);
+    showRepos(repoData);
 };
 
-getRepos();
+const showRepos = function (repos) {
+    for (const repo of repos) {
+        const repoObject = document.createElement("li");
+        repoObject.classList.add("repo");
+        repoObject.innerHTML = `<h3>${repo.name}</h3>`
+        repoList.append(repoObject);
+    }
+};
