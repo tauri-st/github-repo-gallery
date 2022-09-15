@@ -7,6 +7,8 @@ const repoList = document.querySelector(".repo-list");
 const repoSection = document.querySelector(".repos");
 //Section where repo data appears
 const repoDataSection = document.querySelector(".repos");
+//Section where individual repo data appears
+const repoData = document.querySelector(".repo-data");
 
 const getProfile = async function () {
     const profile = await fetch(
@@ -69,7 +71,28 @@ const pullThatRepo = async function (repoName) {
     const repoInfo = await fetchThatRepo.json();
     console.log(repoInfo);
     const fetchLanguages = await fetch(
-        `repoInfo.languages_url`
+        repoInfo.languages_url
     );
-    console.log(fetchLanguages);
+    const languageData = await fetchLanguages.json();
+    console.log(languageData);
+    const languages = [];
+    for (const language in languageData) {
+        languages.push(language);
+    };
+    showThatRepo(repoInfo, languages);
+};
+
+const showThatRepo = async function (repoInfo, languages) {
+    repoData.innerHTML = "";
+    const repoDetails = document.createElement("div");
+    repoDetails.innerHTML = `
+        <h3>Name: ${repoInfo.name}</h3>
+        <p>Description: ${repoInfo.description}</p>
+        <p>Default Branch: ${repoInfo.default_branch}</p>
+        <p>Languages: ${languages.join(", ")}</p>
+        <a class="visit" href="${repoInfo.html_url}" target="_blank" rel="noreferrer noopener">View Repo on GitHub!</a>
+        `
+        repoData.append(repoDetails);
+        repoData.classList.remove("hide");
+        repoDataSection.classList.add("hide");
 };
