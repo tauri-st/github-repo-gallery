@@ -3,6 +3,10 @@ const profileDiv = document.querySelector(".overview");
 const username = "tauri-st";
 //Unordered list where repos appear
 const repoList = document.querySelector(".repo-list");
+//Section where repos appear
+const repoSection = document.querySelector(".repos");
+//Section where repo data appears
+const repoDataSection = document.querySelector(".repos");
 
 const getProfile = async function () {
     const profile = await fetch(
@@ -49,4 +53,23 @@ const showRepos = function (repos) {
         repoObject.innerHTML = `<h3>${repo.name}</h3>`
         repoList.append(repoObject);
     }
+};
+
+repoList.addEventListener("click", function (e) {
+    if (e.target.matches("h3")) {
+        const repoName = e.target.innerText;
+        pullThatRepo(repoName);
+    }
+});
+
+const pullThatRepo = async function (repoName) {
+    const fetchThatRepo = await fetch(
+        `https://api.github.com/repos/${username}/${repoName}`
+    );
+    const repoInfo = await fetchThatRepo.json();
+    console.log(repoInfo);
+    const fetchLanguages = await fetch(
+        `repoInfo.languages_url`
+    );
+    console.log(fetchLanguages);
 };
