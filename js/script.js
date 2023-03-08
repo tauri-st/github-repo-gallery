@@ -9,7 +9,6 @@ const repoSection = document.querySelector(".repos");
 const repoDataSection = document.querySelector(".repos");
 //Section where individual repo data appears
 const repoData = document.querySelector(".repo-data");
-//Back to Repo Gallery button
 const backToGalleryButton = document.querySelector(".view-repos");
 //Input with "search by the name" placeholder
 const filterInput = document.querySelector(".filter-repos");
